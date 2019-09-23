@@ -127,3 +127,30 @@
  		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   	</listener>
 <---空指针的问题完美解决--->
+
+<!--此包删除-->
+<dependency>
+	    <groupId>javax.ws.rs</groupId>
+	    <artifactId>jsr311-api</artifactId>
+	    <version>1.1.1</version>
+</dependency>
+<!--此包有引入restful注解的包-->
+jersey中<dependency>
+	        <groupId>org.glassfish.jersey.media</groupId>
+	        <artifactId>jersey-media-multipart</artifactId>
+	        <version>${jersey.version}</version>
+</dependency>
+配置nginx
+nginx.conf文件：
+http中添加
+ #昌吉车辆监控系统 web
+    upstream vms_server {
+        server 127.0.0.1:8080;
+    }
+    
+    server中添加
+    location /vms_server/ {
+			proxy_pass http://vms_server/VMS/rest/;
+	}
+		
+访问地址：http://localhost:8020/vms_server/userPermission/getAll/

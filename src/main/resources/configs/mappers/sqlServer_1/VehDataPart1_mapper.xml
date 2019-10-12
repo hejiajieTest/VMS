@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscloud.manager.mapper1.vehDataPart.VehDataPartMapper">
+
+    <resultMap type="com.tscloud.manager.entity.vehDataPart.VehDataPart" id="vehDataPartResultMap">
+        <result column="GpsId" property="gpsId" javaType="java.lang.Long"/>
+        <result column="VehID" property="vehID" javaType="java.lang.Integer"/>
+        <result column="Velocity" property="velocity" javaType="java.lang.Integer"/>
+        <result column="Time" property="time" javaType="java.util.Date"/>
+        <result column="RunMile" property="runMile" javaType="java.lang.Integer"/>
+        <result column="Angle" property="angle" javaType="java.lang.Integer"/>
+        <result column="Alarm" property="alarm" javaType="java.lang.Integer"/>
+        <result column="Longitude" property="longitude" javaType="java.math.BigDecimal"/>
+        <result column="Latitude" property="latitude" javaType="java.math.BigDecimal"/>
+        <result column="AlarmStatus" property="alarmStatus" javaType="java.lang.String"/>
+    </resultMap>
+    
+    <sql id="column">
+       t.GpsId,t.VehID,t.Velocity,t.RunMile,t.Angle,t.Alarm,t.Time
+    </sql>
+     <!--查询条件-->
+    <sql id="sql_where">
+        <where>
+            <if test="gpsId != null and gpsId != '' ">
+                <![CDATA[
+                  and t.GpsId =#{gpsId}
+                ]]>
+            </if>
+        </where>
+    </sql>
+    
+ 	<select id="findAll" resultMap="vehDataPartResultMap">
+        select top 3
+        <include refid="column"/>
+        from VehDataPart1 t 
+    </select>
+    
+    <delete id="deleteByIds" parameterType="java.util.List">
+    	delete from VehDataPart1 where UserID in
+    	 <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+    <select id="findByMap" parameterType="java.util.Map" resultMap="vehDataPartResultMap">
+    	select 
+    	<include refid="column"/>
+    	from VehDataPart1 t
+    	<include refid="sql_where"/>
+    </select>
+    
+</mapper>

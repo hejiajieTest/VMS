@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscloud.manager.mapper.vehicle.VehicleMapper">
+
+    <resultMap type="com.tscloud.manager.entity.vehicle.Vehicle" id="vehicleResultMap">
+        <result column="Id" property="ID" javaType="java.lang.Integer"/>
+        <result column="Cph" property="cph" javaType="java.lang.String"/>
+        <result column="VehGroupID" property="vehGroupID" javaType="java.lang.Integer"/>
+        <result column="Deviceid" property="deviceid" javaType="java.lang.String"/>
+    </resultMap>
+      <resultMap type="com.tscloud.manager.entity.vehicle.Vehicle" id="vehGroupMainResultMapExt">
+        <result column="parentId" property="pId" javaType="java.lang.String"/>
+        <result column="childId" property="id" javaType="java.lang.String"/>
+        <result column="childName" property="childName" javaType="java.lang.String"/>
+    </resultMap>
+    
+    <select id="findByVehGroupID" parameterType="java.util.Map" resultMap="vehGroupMainResultMapExt">
+	    SELECT
+			v.Cph childName,
+			v.Id childId,
+			vd.VehGroupID parentId
+		FROM
+			VehicleDetail vd,
+			VehGroupMain vm,
+			Vehicle v
+		WHERE
+			v.Id = vd.VehID
+		AND vd.VehGroupID = vm.VehGroupID
+		AND vm.VehGroupID = #{vehGroupID}
+   </select>
+    
+    
+    
+</mapper>

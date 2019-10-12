@@ -134,7 +134,7 @@
 	    <artifactId>jsr311-api</artifactId>
 	    <version>1.1.1</version>
 </dependency>
-<!--此包有引入restful注解的包-->
+<!--此包有引入restful注解-->
 jersey中<dependency>
 	        <groupId>org.glassfish.jersey.media</groupId>
 	        <artifactId>jersey-media-multipart</artifactId>
@@ -152,5 +152,9 @@ http中添加
     location /vms_server/ {
 			proxy_pass http://vms_server/VMS/rest/;
 	}
-		
-访问地址：http://localhost:8020/vms_server/userPermission/getAll/
+访问地址：http://localhost:8080/VMS/rest/userPermission/getAll/
+配置nginx后的访问地址：http://localhost:8020/vms_server/userPermission/getAll/
+
+自己的虚拟机访问地址：http://192.168.64.129:8080/VMS/rest/userPermission/getAll/
+虚拟机安装nginx后，访问地址：http://192.168.64.129:8020/vmsServer/manualInfo/getAll/
+不知道为什么会报错 java.lang.IllegalArgumentException: The character [_] is never valid in a domai，下划线不能被识别，直接将vms_server改成vmsServer

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscloud.manager.mapper.vehGroupMain.VehGroupMainMapper">
+
+    <resultMap type="com.tscloud.manager.entity.vehGroupMain.VehGroupMain" id="vehGroupMainResultMap">
+        <result column="VehGroupID" property="id_" javaType="java.lang.Integer"/>
+        <result column="VehGroupName" property="ipAddress" javaType="java.lang.String"/>
+        <result column="Contact" property="deviceid" javaType="java.lang.String"/>
+        <result column="sTel1" property="cph" javaType="java.lang.String"/>
+        <result column="sTel2" property="deCph" javaType="java.lang.String"/>
+        <result column="Address" property="ownerName" javaType="java.lang.String"/>
+        <result column="DelFlag" property="ownerName" javaType="java.lang.Integer"/>
+        <result column="isStore" property="ownerName" javaType="java.lang.Integer"/>
+    </resultMap>
+     <resultMap type="com.tscloud.manager.entity.vehGroupMain.VehGroupMain" id="vehGroupMainResultMapExt">
+        <result column="parentId" property="pId" javaType="java.lang.String"/>
+        <result column="childId" property="id" javaType="java.lang.String"/>
+        <result column="childName" property="childName" javaType="java.lang.String"/>
+        <result column="num" property="num" javaType="java.lang.Integer"/>
+        <result column="num1" property="num1" javaType="java.lang.Integer"/>
+        <result column="num2" property="num2" javaType="java.lang.Integer"/>
+    </resultMap>
+    
+ <select id="findByUserId" parameterType="java.util.Map" resultMap="vehGroupMainResultMapExt">
+		 SELECT
+		v.id+10000 childId,v.cph childName,m.VehGroupID parentId
+	FROM
+		Vehicle v,
+		VehicleDetail vd,
+		(
+			SELECT
+				uv.VehGroupID
+			FROM
+				User_VehGroup uv,
+				VehGroupDetail vgd,
+				VehGroupMain vm
+			WHERE
+				uv.VehGroupID = vgd.VehGroupID
+			AND uv.userId = #{userId}
+			AND vm.VehGroupID = vgd.VehGroupID
+			UNION
+				SELECT
+					vgd.VehGroupID
+				FROM
+					User_VehGroup uv,
+					VehGroupDetail vgd,
+					VehGroupMain vm
+				WHERE
+					uv.VehGroupID = vgd.fVehGroupID
+				AND uv.userId =  #{userId}
+				AND vm.VehGroupID = vgd.VehGroupID
+		) m
+	WHERE
+		v.id = vd.VehID
+	AND vd.VehGroupID = m.VehGroupID order by childName
+    </select>
+     <select id="findGroupByUserId" parameterType="java.util.Map" resultMap="vehGroupMainResultMapExt">
+					SELECT
+	uv.VehGroupID childId,
+	vgd.fVehGroupID parentId,
+	vm.VehGroupName childName,
+(
+		SELECT
+			COUNT (*)
+		FROM
+			VehGroupDetail v3,
+			VehGroupMain v4
+		WHERE
+			v3.fVehGroupID = uv.VehGroupID
+		AND v3.VehGroupID = v4.VehGroupID
+	) num1,
+(
+		SELECT
+			COUNT (*)
+		FROM
+			VehicleDetail vd
+		WHERE
+			vd.VehGroupID = uv.VehGroupID
+	) num
+FROM
+	User_VehGroup uv,
+	VehGroupDetail vgd,
+	VehGroupMain vm
+WHERE
+	uv.VehGroupID = vgd.VehGroupID
+AND uv.userId = #{userId}
+AND vm.VehGroupID = vgd.VehGroupID
+UNION
+	SELECT
+		vgd.VehGroupID childId,
+		uv.VehGroupID parentId,
+		vm.VehGroupName childNamem,
+(
+		SELECT
+			COUNT (*)
+		FROM
+			VehGroupDetail v3,
+			VehGroupMain v4
+		WHERE
+			v3.fVehGroupID = vgd.VehGroupID
+		AND v3.VehGroupID = v4.VehGroupID
+	) num1,
+(
+		SELECT
+			COUNT (*)
+		FROM
+			VehicleDetail vd
+		WHERE
+			vd.VehGroupID = vgd.VehGroupID
+	) num
+	FROM
+		User_VehGroup uv,
+		VehGroupDetail vgd,
+		VehGroupMain vm
+	WHERE
+		uv.VehGroupID = vgd.fVehGroupID
+	AND uv.userId = #{userId}
+	AND vm.VehGroupID = vgd.VehGroupID
+	ORDER BY
+		childName
+    </select>
+</mapper>

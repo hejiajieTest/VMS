@@ -14,5 +14,7 @@
 <context:component-scan base-package="com.tscloud.manager" />  
 <import resource="classpath:configs/spring.xml"/>
 <import resource="classpath:configs/spring-mybatis.xml"/>
+<import resource="classpath:configs/spring-mybatis_1.xml"/>
 <import resource="classpath:configs/mybatis-config.xml"/>
+<!-- <import resource="classpath:configs/spring-quarz.xml"/> -->
 </beans>

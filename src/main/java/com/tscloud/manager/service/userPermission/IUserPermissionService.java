@@ -15,4 +15,5 @@ import com.tscloud.manager.entity.userPermission.UserPermission;
 
 public interface IUserPermissionService extends IBaseInterfaceService<UserPermission>{
 
+	public void test() ;
 }

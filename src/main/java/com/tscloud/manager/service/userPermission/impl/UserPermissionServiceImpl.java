@@ -30,5 +30,10 @@ public class UserPermissionServiceImpl extends BaseInterfaceServiceImpl<UserPerm
 	public BaseInterfaceMapper<UserPermission> getBaseInterfaceMapper() {
 		return userPermissionMapper;
 	}
+	@Override
+	public void test() {
+		System.out.println("定时任务执行成功！！！");
+	}
 
+	
 }

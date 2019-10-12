@@ -12,32 +12,31 @@ package com.tscloud.manager.entity.userPermission;
 
 import com.tscloud.common.framework.domain.TrackableEntity;
 
-public class UserPermission extends TrackableEntity{
+public class UserPermission extends TrackableEntity {
 
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = -5676917694904268813L;
 
-	private Integer UserID ;
+	private Integer userID ;
 	
-	private String FuncID ;
+	private String funcID ;
 
 	public Integer getUserID() {
-		return UserID;
+		return userID;
 	}
 
 	public void setUserID(Integer userID) {
-		UserID = userID;
+		this.userID = userID;
 	}
 
 	public String getFuncID() {
-		return FuncID;
+		return funcID;
 	}
 
 	public void setFuncID(String funcID) {
-		FuncID = funcID;
+		this.funcID = funcID;
 	}
-	
-	
+
 }

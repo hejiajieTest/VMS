@@ -31,6 +31,7 @@ import com.tscloud.manager.util.TreeNodeDto;
 @Service
 public class VehGroupMainServiceImpl extends BaseInterfaceServiceImpl<VehGroupMain> implements IVehGroupMainService{
 
+	private static Integer NUM =0 ;
 	@Resource
 	private VehGroupMainMapper vehGroupMainMapper ;
 	
@@ -62,6 +63,18 @@ public class VehGroupMainServiceImpl extends BaseInterfaceServiceImpl<VehGroupMa
 		}
 		return nodes;
 	}
+	public Integer getChildCategory(List<VehGroupMain> allCategoryList, String parentId){  		
+		for (VehGroupMain vehGroupMain : allCategoryList) {
+			// 判断是否存在子节点
+			if (vehGroupMain.getpId().equals(parentId)) {
+				// 递归遍历下一级
+				getChildCategory(allCategoryList, vehGroupMain.getId() );
+				NUM +=vehGroupMain.getNum1();
+			}
+		}
+		System.out.println("childCategoryList=" + NUM);
+		return NUM;
+	}
 	private TreeNodeDto getTreeNode2(VehGroupMain vehGroupMain) {
 		TreeNodeDto node = new TreeNodeDto();
 		node.setId(vehGroupMain.getId());
@@ -70,6 +83,7 @@ public class VehGroupMainServiceImpl extends BaseInterfaceServiceImpl<VehGroupMa
 		if(vehGroupMain.getNum1() == 0 && vehGroupMain.getNum() == 0){
 			node.setIsParent("false");
 		}
+		node.setIcon("css/img/车组图标.png");
 		node.setType("1");
 		return node;
 	}
@@ -79,6 +93,16 @@ public class VehGroupMainServiceImpl extends BaseInterfaceServiceImpl<VehGroupMa
 		node.setpId(vehGroupMain.getpId());
 		node.setName(vehGroupMain.getChildName());
 		node.setIsParent("false");
+		if(0 == vehGroupMain.getRunStatusFlag()){
+			node.setIcon("css/img/在线无速度.png");
+		}
+		if(1 == vehGroupMain.getRunStatusFlag()){
+			node.setIcon("css/img/在线图标.png");
+		}
+		if(2 == vehGroupMain.getRunStatusFlag()){
+			node.setIcon("css/img/离线图标.png");
+		}
+		//node.setIcon("css/img/在线图标.png");
 		node.setType("2");
 		return node;
 	}

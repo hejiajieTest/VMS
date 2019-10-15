@@ -1,5 +1,6 @@
 package com.tscloud.manager.util;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -8,7 +9,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -240,13 +244,30 @@ public class DatabaseHelper {
 	                columnNames.add(rsmd.getColumnName(i + 1));
 	            }
             }*/
-           
+           /*if(!resultSet.next() ){
+        	    vehDataPart.setGpsId(0L);
+	           	vehDataPart.setAlarm(0);
+	           	vehDataPart.setVehID(0);
+	           	vehDataPart.setVelocity(0);
+	           	vehDataPart.setTime(new Date());
+	           	vehDataPart.setRunMile(0);
+	           	vehDataPart.setAngleText("无");
+	           	vehDataPart.setLongitude(new BigDecimal(0));
+	           	vehDataPart.setLatitude(new BigDecimal(0));
+	           	vehDataPart.setAlarmStatus("无");
+           }
+        	   vehDataPart = null ;
+           }*/
             while (resultSet.next()) {
             	vehDataPart.setGpsId(resultSet.getLong("GpsId"));
             	vehDataPart.setAlarm(resultSet.getInt("Alarm"));
-            	vehDataPart.setVehID(resultSet.getInt("VehID"));
+            	vehDataPart.setVehID(resultSet.getInt("VehID")+10000);
             	vehDataPart.setVelocity(resultSet.getInt("Velocity"));
-            	vehDataPart.setTime(resultSet.getDate("Time"));
+            	try {
+					vehDataPart.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(resultSet.getString("Time")));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
             	vehDataPart.setRunMile(resultSet.getInt("RunMile"));
             	vehDataPart.setAngle(resultSet.getInt("Angle"));
             	vehDataPart.setLongitude(resultSet.getBigDecimal("Longitude"));

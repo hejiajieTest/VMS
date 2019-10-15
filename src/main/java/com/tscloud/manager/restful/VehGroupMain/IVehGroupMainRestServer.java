@@ -17,16 +17,21 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import com.tscloud.common.framework.rest.BaseRestServerInterface;
 
 public interface IVehGroupMainRestServer extends BaseRestServerInterface{
 
-  @POST
+/*  @POST
   @Path("getZTree")
   @Consumes({"application/json"})
   @Produces({"application/json"})
-  public List getZTree(String paramString) ;
+  public List getZTree(String paramString) ;*/
+  @GET
+  @Path("getZTree")
+  @Produces({"application/json"})
+  public List getZTree(@QueryParam("userId") String paramString);
   
   @POST
   @Path("getZTreeVehicle")

@@ -49,7 +49,14 @@ public class VehGroupMain extends TrackableEntity {
 	private Integer num1 ;
 	private Integer num2 ;
 	private String type ;
-	private String userID ;
+	private Integer runStatusFlag ;
+	
+	public Integer getRunStatusFlag() {
+		return runStatusFlag;
+	}
+	public void setRunStatusFlag(Integer runStatusFlag) {
+		this.runStatusFlag = runStatusFlag;
+	}
 	public Integer getVehGroupID() {
 		return vehGroupID;
 	}
@@ -104,9 +111,7 @@ public class VehGroupMain extends TrackableEntity {
 	public String getType() {
 		return type;
 	}
-	public String getUserID() {
-		return userID;
-	}
+	
 	public void setVehGroupID(Integer vehGroupID) {
 		this.vehGroupID = vehGroupID;
 	}
@@ -160,9 +165,6 @@ public class VehGroupMain extends TrackableEntity {
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public void setUserID(String userID) {
-		this.userID = userID;
 	}
 	
 }

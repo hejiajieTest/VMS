@@ -47,6 +47,7 @@ public class VehDataPart extends TrackableEntity {
 	private Integer Alarm ;
 	
 	private boolean Light ;
+	
 	private boolean Oil ;
 	
 	private boolean locate ;

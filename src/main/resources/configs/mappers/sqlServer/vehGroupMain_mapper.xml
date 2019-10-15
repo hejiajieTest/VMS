@@ -24,7 +24,7 @@
     
  <select id="findByUserId" parameterType="java.util.Map" resultMap="vehGroupMainResultMapExt">
 		 SELECT
-		v.id+10000 childId,v.cph childName,m.VehGroupID parentId
+		v.id+10000 childId,v.cph childName,m.VehGroupID parentId,b.RunStatusFlag
 	FROM
 		Vehicle v,
 		VehicleDetail vd,
@@ -52,7 +52,7 @@
 				AND vm.VehGroupID = vgd.VehGroupID
 		) m
 	WHERE
-		v.id = vd.VehID
+		v.id = vd.VehID and b.VehID =vd.VehID 
 	AND vd.VehGroupID = m.VehGroupID order by childName
     </select>
      <select id="findGroupByUserId" parameterType="java.util.Map" resultMap="vehGroupMainResultMapExt">

@@ -30,6 +30,13 @@
 		AND vm.VehGroupID = #{vehGroupID}
    </select>
     
-    
+    <select id="findById" parameterType="java.lang.String" resultMap="vehGroupMainResult">
+	    SELECT
+			v.Id,v.
+		FROM
+			Vehicle v
+		WHERE
+		AND v.id=#{id}
+   </select>
     
 </mapper>

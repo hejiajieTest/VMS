@@ -41,7 +41,9 @@ public class VehGroupMainRestServiceImpl extends BaseRestServerInterfaceImplNoDu
 	@Override
 	public List getZTree(String jsonStr) {
 		//获取所有叶子
-		VehGroupMain vehGroupMain = JSON.parseObject(jsonStr, this.getEntityClass());
+		/*VehGroupMain vehGroupMain = JSON.parseObject(jsonStr, this.getEntityClass());*/
+		VehGroupMain vehGroupMain = new VehGroupMain() ;
+		vehGroupMain.setUserId(jsonStr);
 		nodeList = vehGroupMainService.getZTree(vehGroupMain.getUserId()) ;
 		return nodeList;
 	}
